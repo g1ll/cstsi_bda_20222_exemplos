@@ -29,7 +29,7 @@ const refDB = fb.ref(db, 'produtos/');
 //Descomente cada filtro por vez para testar
 // const consulta = fb.query(refDB, fb.orderByChild(filtro), fb.limitToFirst(total))
 // const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.limitToLast(total))
-const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.startAt(value))
+// const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.startAt(value))
 // const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.startAfter(value))
 // const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.endAt(value))
 // const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.endBefore(value))
@@ -37,15 +37,15 @@ const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.startAt(value))
 // const consulta = fb.query(refDB,fb.orderByChild('nome'),fb.equalTo('SSD 4TB'))
 // const consulta = fb.query(refDB,fb.orderByChild('preco'))
 
-fb.onValue(consulta, snap => total =  (snap.exists())?Object.entries(snap.val()).length:0)
-//if ternário: (flag)?true:false;
-// fb.onValue(consulta, (snap) => {
-//     if (snap.exists()) {
-//         total = Object.entries(snap.val()).length;
-//     } else {
-//         total = 0;
-//     }
-// })
+// fb.onValue(consulta, snap => total =  (snap.exists())?Object.entries(snap.val()).length:0)
+// if ternário: (flag)?true:false;
+fb.onValue(consulta, (snap) => {
+    if (snap.exists()) {
+        total = Object.entries(snap.val()).length;
+    } else {
+        total = 0;
+    }
+})
 
 fb.onChildAdded(consulta, (snap) => {//executa a cada disparo do evento child_added
  produtos.push([snap.key, snap.val()])
