@@ -38,6 +38,7 @@ const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.startAt(value))
 // const consulta = fb.query(refDB,fb.orderByChild('preco'))
 
 fb.onValue(consulta, snap => total =  (snap.exists())?Object.entries(snap.val()).length:0)
+
 //if ternário: (flag)?true:false;
 // fb.onValue(consulta, (snap) => {
 //     if (snap.exists()) {
@@ -47,13 +48,39 @@ fb.onValue(consulta, snap => total =  (snap.exists())?Object.entries(snap.val())
 //     }
 // })
 
+// fb.onChildAdded(consulta, (snap) => {//executa a cada disparo do evento child_added
+//  produtos.push([snap.key, snap.val()])
+// })
+
+// setInterval(() => {//executa a cada 1 segundo para monitorar o array produtos
+//     if (produtos.length === total) {
+//         console.table(Object.fromEntries(produtos))
+//         process.exit(0);
+//     }
+// }, 1000)
+
+
+//PROMISE
+
 fb.onChildAdded(consulta, (snap) => {//executa a cada disparo do evento child_added
- produtos.push([snap.key, snap.val()])
+    produtos.push([snap.key, snap.val()])
 })
 
-setInterval(() => {//executa a cada 1 segundo para monitorar o array produtos
-    if (produtos.length === total) {
-        console.table(Object.fromEntries(produtos))
-        process.exit(0);
-    }
-}, 1000)
+const readyToTable=(timeout)=>new Promise((resolve,reject)=>{
+
+    setInterval(()=>{
+        // console.log(`${produtos.length} | ${total}`)
+        if(produtos.length===total)
+            resolve(Object.fromEntries(produtos))
+    },1000)
+
+    setTimeout(()=>{
+        reject(`Timeout: ${timeout}s`)
+    },timeout,reject)
+});
+
+await readyToTable(1000)
+    .then(produtos=>console.table(produtos))
+    .catch(e=>console.log(e))
+
+process.exit(0)
