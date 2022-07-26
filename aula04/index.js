@@ -66,22 +66,6 @@ fb.onChildAdded(consulta, (snap) => {//executa a cada disparo do evento child_ad
     produtos.push([snap.key, snap.val()])
 })
 
-const readyToTable = (timeout) => new Promise((resolve, reject) => {
-
-    let interval = setInterval(() => {
-        if (produtos.length === total){
-            clearInterval(interval)
-            resolve(Object.fromEntries(produtos))
-        }
-    }, 1000)
-
-    setTimeout(() => {
-        clearInterval(interval)
-        reject(`Timeout: ${timeout}s`)
-    }, timeout, reject)
-});
-
-
 const printTable = () => new Promise((resolve) => {
     let interval = setInterval(() => {
         if (produtos.length === total) {
@@ -92,10 +76,27 @@ const printTable = () => new Promise((resolve) => {
     }, 1000)
 })
 
+await printTable();
+
+// const readyToTable = (timeout) => new Promise((resolve, reject) => {
+
+//     let interval = setInterval(() => {
+//         if (produtos.length === total){
+//             clearInterval(interval)
+//             resolve(Object.fromEntries(produtos))
+//         }
+//     }, 1000)
+
+//     setTimeout(() => {
+//         clearInterval(interval)
+//         reject(`Timeout: ${timeout}s`)
+//     }, timeout, reject)
+// });
+
+
+
 // await readyToTable(1000)
 //     .then(produtos=>console.table(produtos))
 //     .catch(e=>console.log(e))
-
-await printTable();
 
 process.exit(0)
