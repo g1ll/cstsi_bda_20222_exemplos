@@ -29,7 +29,7 @@ const refDB = fb.ref(db, 'produtos/');
 //Descomente cada filtro por vez para testar
 // const consulta = fb.query(refDB, fb.orderByChild(filtro), fb.limitToFirst(total))
 // const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.limitToLast(total))
-const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.startAt(value))
+const consulta = fb.query(refDB, fb.orderByChild(filtro), fb.startAt(value))
 // const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.startAfter(value))
 // const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.endAt(value))
 // const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.endBefore(value))
@@ -37,7 +37,7 @@ const consulta = fb.query(refDB,fb.orderByChild(filtro),fb.startAt(value))
 // const consulta = fb.query(refDB,fb.orderByChild('nome'),fb.equalTo('SSD 4TB'))
 // const consulta = fb.query(refDB,fb.orderByChild('preco'))
 
-fb.onValue(consulta, snap => total =  (snap.exists())?Object.entries(snap.val()).length:0)
+fb.onValue(consulta, snap => total = (snap.exists()) ? Object.entries(snap.val()).length : 0)
 
 //if ternário: (flag)?true:false;
 // fb.onValue(consulta, (snap) => {
@@ -60,27 +60,42 @@ fb.onValue(consulta, snap => total =  (snap.exists())?Object.entries(snap.val())
 // }, 1000)
 
 
-//PROMISE
+//USING PROMISE
 
 fb.onChildAdded(consulta, (snap) => {//executa a cada disparo do evento child_added
     produtos.push([snap.key, snap.val()])
 })
 
-const readyToTable=(timeout)=>new Promise((resolve,reject)=>{
+const readyToTable = (timeout) => new Promise((resolve, reject) => {
 
-    setInterval(()=>{
-        // console.log(`${produtos.length} | ${total}`)
-        if(produtos.length===total)
+    let interval = setInterval(() => {
+        if (produtos.length === total){
+            clearInterval(interval)
             resolve(Object.fromEntries(produtos))
-    },1000)
+        }
+    }, 1000)
 
-    setTimeout(()=>{
+    setTimeout(() => {
+        clearInterval(interval)
         reject(`Timeout: ${timeout}s`)
-    },timeout,reject)
+    }, timeout, reject)
 });
 
-await readyToTable(1000)
-    .then(produtos=>console.table(produtos))
-    .catch(e=>console.log(e))
+
+const printTable = () => new Promise((resolve) => {
+    let interval = setInterval(() => {
+        if (produtos.length === total) {
+            console.table(Object.fromEntries(produtos))
+            clearInterval(interval)
+            resolve()
+        }
+    }, 1000)
+})
+
+// await readyToTable(1000)
+//     .then(produtos=>console.table(produtos))
+//     .catch(e=>console.log(e))
+
+await printTable();
 
 process.exit(0)
