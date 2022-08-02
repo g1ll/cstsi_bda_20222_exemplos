@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import "dotenv/config"
 import { initializeApp } from "firebase/app";
 import { getDatabase, set, ref, push, get } from "firebase/database"
 import {
@@ -23,10 +23,25 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-//###RULES###
+//###TESTE DE REGRAS###
+let newProduto = {
+    descricao: "TV SMART 80\" LG 16K",
+    id_prod: 333,
+    importado: 0,
+    // nome: "LG",
+    nome: "TV SMART LG 80\"",
+    preco: 19990,
+    qtd_estoque: 100
+};
 
-
-
+// push(ref(db,'produtos'),newProduto).then(()=>{
+// 	console.log("Iniserido")
+//     console.log(newProduto)
+// 	process.exit(0);	
+// }).catch(e=>{
+//     console.log(e)
+//     process.exit(0)
+// })
 
 //###AUTENTICAÇÃO####
 //// const auth = getAuth();
