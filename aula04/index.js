@@ -22,7 +22,7 @@ const db = fb.getDatabase(app);
 let total; //usado para os exemplos com todos os filtros
 total = 5; //usado para os filtros limitToFirst e limitToLast, comentar para os demais
 const value = 4500;
-const filtro = 'preco';
+const filtro = 'importado';
 const produtos = [];
 
 const refDB = fb.ref(db, 'produtos/');
@@ -39,18 +39,18 @@ const consulta = fb.query(refDB, fb.orderByChild(filtro), fb.limitToFirst(total)
 
 
 //Total de resultados da consulta
-fb.onValue(consulta, snap => {
-        // if ternário: (flag)?true:false;
-        total = (snap.exists()) ? Object.entries(snap.val()).length : 0
-    }
-)
+// fb.onValue(consulta, snap => {
+//         // if ternário: (flag)?true:false;
+//         total = (snap.exists()) ? Object.entries(snap.val()).length : 0
+//     }
+// )
 
 //Total de registros dentro do nó especificado (produtos)
-fb.onValue(fb.query(fb.ref(db, 'produtos')), (snap) => {
-    if (snap.exists()) {
-        console.log(`Total de produtos: ${Object.entries(snap.val()).length}`)
-    }
-})
+// fb.onValue(fb.query(fb.ref(db, 'produtos')), (snap) => {
+//     if (snap.exists()) {
+//         console.log(`Total de produtos: ${Object.entries(snap.val()).length}`)
+//     }
+// })
 
 fb.onChildAdded(consulta, (snap) => {//executa a cada disparo do evento child_added
     produtos.push(snap.val())
