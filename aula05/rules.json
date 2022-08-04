@@ -1,0 +1,14 @@
+{
+	"rules": {
+	".read": "now < 1661310000000",  	 // 2022-8-24
+	// ".write": "now < 1661310000000",  // 2022-8-24 
+	// ".write": "!data.exists() || !newData.exists()", //apenas criação e remoção
+	"produtos":{
+		".indexOn": ["preco","nome"],
+		"$id":{
+                ".validate": "newData.hasChild('nome')", //testa se existe o campo nome
+              	".write": "!data.exists() || !newData.exists()"
+           	}
+        }
+    }
+}
