@@ -1,6 +1,6 @@
 import "dotenv/config"
 import { initializeApp } from "firebase/app";
-import { getDatabase, set, ref, push, get } from "firebase/database"
+import { getDatabase, set, ref, push, get, update, remove} from "firebase/database"
 import {
     createUserWithEmailAndPassword,
     getAuth,
@@ -24,24 +24,46 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 //###TESTE DE REGRAS###
+//rules.json
+
 let newProduto = {
     descricao: "TV SMART 80\" LG 16K",
     id_prod: 333,
     importado: 0,
-    // nome: "LG",
-    nome: "TV SMART LG 80\"",
+    nome: "LG",
+    // nome: "TV SMART LG 80\"",
     preco: 19990,
     qtd_estoque: 100
 };
 
-// push(ref(db,'produtos'),newProduto).then(()=>{
-// 	console.log("Iniserido")
-//     console.log(newProduto)
-// 	process.exit(0);	
-// }).catch(e=>{
-//     console.log(e)
+// console.log(JSON.stringify(newProduto))
+
+// remove(ref(db,'produtos/-MwSzyJMlNDToTGtPuhc')).then(()=>{
+//     console.log('Remover!')
 //     process.exit(0)
+// }).catch(e=>{
+//     console.log('Não Atualizado!')
+//     console.log(e)
+//     process.exit(0)   
 // })
+
+// update(ref(db,'produtos/-N8Zh1dYhpcsmZRVB4ad'),newProduto).then(()=>{
+//     console.log('Atualizar!')
+//     process.exit(0)
+// }).catch(e=>{
+//     console.log('Não Atualizado!')
+//     console.log(e)
+//     process.exit(0)   
+// })
+
+push(ref(db,'produtos'),newProduto).then(()=>{
+	console.log("Iniserido: ")
+    console.log(newProduto)
+	process.exit(0);	
+}).catch(e=>{
+    console.log(e)
+    process.exit(0)
+})
 
 //###AUTENTICAÇÃO####
 //// const auth = getAuth();
