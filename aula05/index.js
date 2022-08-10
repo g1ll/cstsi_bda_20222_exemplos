@@ -1,6 +1,6 @@
 import "dotenv/config"
 import { initializeApp } from "firebase/app";
-import { getDatabase, set, ref, push, get, update, remove} from "firebase/database"
+import { getDatabase, set, ref, push, get, update, remove } from "firebase/database"
 import {
     createUserWithEmailAndPassword,
     getAuth,
@@ -26,15 +26,15 @@ const db = getDatabase(app);
 //###TESTE DE REGRAS###
 //rules.json
 
-let newProduto = {
-    descricao: "TV SMART 80\" LG 16K",
-    id_prod: 333,
-    importado: 0,
-    nome: "LG",
-    // nome: "TV SMART LG 80\"",
-    preco: 19990,
-    qtd_estoque: 100
-};
+// let newProduto = {
+//     descricao: "TV SMART 80\" LG 16K",
+//     id_prod: 333,
+//     importado: 0,
+//     nome: "LG",
+//     // nome: "TV SMART LG 80\"",
+//     preco: 19990,
+//     qtd_estoque: 100
+// };
 
 // console.log(JSON.stringify(newProduto))
 
@@ -56,92 +56,135 @@ let newProduto = {
 //     process.exit(0)   
 // })
 
-push(ref(db,'produtos'),newProduto).then(()=>{
-	console.log("Iniserido: ")
-    console.log(newProduto)
-	process.exit(0);	
-}).catch(e=>{
-    console.log(e)
-    process.exit(0)
-})
+// push(ref(db,'produtos'),newProduto).then(()=>{
+// 	console.log("Iniserido: ")
+//     console.log(newProduto)
+// 	process.exit(0);	
+// }).catch(e=>{
+//     console.log(e)
+//     process.exit(0)
+// })
 
 //###AUTENTICAÇÃO####
-//// const auth = getAuth();
-//CRIAÇÃO DO USUÁRIO
-//User data
+const auth = getAuth();
+// CRIAÇÃO DO USUÁRIO
+// User data
 // const user = {
 //     email: 'gillgonzales@ifsul.edu.br',
 //     password: 'qwerty'
 // }
-// const credentials = await createUserWithEmailAndPassword(auth, user.email, user.password);
+// const credentials = 
+// await createUserWithEmailAndPassword(
+//     auth, user.email, user.password);
 // console.log(credentials.user.uid)
 
-
 //LOGIN E LOGOUT DO USUÁRIO
+//### ASYNC/AWAIT
 // try {
-//     console.log({ "token": auth.currentUser?.accessToken })
-//     await signInWithEmailAndPassword(auth, user.email, user.password)
-//     console.log({ "token": auth.currentUser?.accessToken })
-//     console.log({ "uid": auth.currentUser.uid })
+//     console.log({ "token":
+//      auth.currentUser?.accessToken })
+//     await signInWithEmailAndPassword(
+//         auth, user.email, user.password)
+//     console.log({ 
+//         "token": auth.currentUser?.accessToken })
+//     console.log({ "uid":
+//      auth.currentUser.uid })
 //     await signOut(auth) //desconecta o user
 //     console.info('deconectado')
-//     console.log({ "token": auth.currentUser?.accessToken })
+//     console.log({ 
+//         "token": auth.currentUser?.accessToken })
 // } catch (error) {
 //     const errorCode = error.code;
 //     const errorMessage = error.message;
 //     console.log({errorCode, errorMessage})
 //     process.exit(0)
 // }
+// process.exit(0)
 
-// const createUser = async (email, password) => {
-//     try {
-//         const credentials = await createUserWithEmailAndPassword(auth, email, password);
-//         console.log({"Created User ":{"uid":credentials.user.uid, "email":email}})
-//         const newUser = await set(ref(db, 'users/' + credentials.user.uid), {
-//             "email": email,
-//         })
-//         process.exit(0)
-//     } catch (error) {
-//         console.log({'errorCode': error.code,"Message":error.Message})
-//         process.exit(0)
-//     }
-// }
+// #### EXEMPLO COM THEN().CATCH()
+// console.log({ "token":
+//      auth.currentUser?.accessToken })
 
-// const loginUser = async (email, password) => {
-//     try {
-//         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-//         return userCredential.user;
-//     } catch (error) {
-//         console.log('error:' + error.code)
-//         process.exit(0)
-//     }
-// }
+// signInWithEmailAndPassword(auth,user.email,user.password)
+// .then(()=>{
+//     console.log({ 
+//         "token": auth.currentUser?.accessToken })
+//     console.log({ "uid":
+//      auth.currentUser.uid })
+//      process.exit(0)   
+// }).catch(error=>{
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     console.log({errorCode, errorMessage})
+//     process.exit(0)
+// })
 
-// const insertProduto = async (newProduto) => {
-//     try {
-//         const refPush = await push(ref(db, 'produtos'), newProduto)
-//         if (refPush) console.log({ "produto": refPush })
-//     } catch (error) {
-//         console.log(error.code)
-//         process.exit(0)
-//     }
-// }
+
+//##### INTEGRANDO COM REALTIME DATABASE
+
+const createUser = async (email, password) => {
+    try {
+        const credentials = await createUserWithEmailAndPassword(auth, email, password);
+        console.log({
+            "Created User ": {
+                "uid": credentials.user.uid, "email": email
+            }
+        })
+        await set(
+            ref(db, 'users/' + credentials.user.uid), {
+            "email": email,
+        })
+        process.exit(0)
+    } catch (error) {
+        console.log({ 'errorCode': error.code, "Message": error.Message })
+        process.exit(0)
+    }
+}
+
+const loginUser = async (email, password) => {
+    try {
+        const userCredential =
+            await signInWithEmailAndPassword(
+                auth, email, password);
+        return userCredential.user;
+    } catch (error) {
+        console.log('error:' + error.code)
+        process.exit(0)
+    }
+}
+
+const insertProduto = async (newProduto) => {
+    try {
+        const refPush =
+            await push(ref(db, 'produtos'), newProduto)
+        if (refPush) console.log({ "produto": refPush._path.pieces_})
+    } catch (error) {
+        console.log(error.code)
+        process.exit(0)
+    }
+}
 
 //Create new user
-// await createUser(user.email, user.password)
+const user = {
+    email: 'gillgonzales@ifsul.edu.br',
+    password: 'qwerty'
+}
+
+// createUser(user.email, user.password)
 
 
-// const loggedUser = await loginUser(user.email, user.password);
-// const novoProduto = {
-//     descricao: "TV SMART 80\" LG 16K",
-//     id_prod: 333,
-//     importado: 0,
-//     nome: "TV SMART LG 80\"",
-//     preco: 19990,
-//     qtd_estoque: 100,
-//     uid: loggedUser.uid
-// };
-// await insertProduto(novoProduto);
-// process.exit(0)
+const loggedUser = await loginUser(user.email, user.password);
+console.log(loggedUser.uid)
+const novoProduto = {
+    descricao: "TV SMART 80\" LG 16K",
+    id_prod: 333,
+    importado: 0,
+    nome: "TV SMART LG 80\"",
+    preco: 19990,
+    qtd_estoque: 100,
+    uid: loggedUser.uid
+};
+await insertProduto(novoProduto);
+process.exit(0)
 
 // console.log(await get(ref(db,'users/')))
