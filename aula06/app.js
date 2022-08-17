@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-import * as fs from 'node:fs/promises';
+import {readFile} from 'fs/promises';
 
 const myDB = {
 	domain: "localhost",
@@ -46,11 +46,10 @@ try {
 	// 	}
 	// ]
 
-	const jsonFile = await fs.readFile('./produtos.json')
+	const jsonFile = await readFile('./produtos.json')
 	const produtos = JSON.parse(jsonFile);
-	console.log(produtos)
 
-	const result = await client.db('mercadinho')
+	const result = await client.db('market')
 				.collection('produtos')
 				.insertMany(produtos)
 
