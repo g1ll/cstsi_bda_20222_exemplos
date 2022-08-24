@@ -17,12 +17,13 @@ try {
     const data = await fs.readFile("./loja.json");
     const produtos = JSON.parse(data)
 
-    if (!typeof produtos !== 'undefined' && !produtos)
+    if (typeof produtos === 'undefined' && !produtos)
         throw Error('Arquivo não encontrado!!')
 
-    const mongoDb = client.db('lojaImportados')
+    const mongoDb = client.db('lojaAula07')
     const mongoCollection = mongoDb.collection('produtos')
-    const result = await mongoCollection.insertMany(produtos);
+    const result = await
+     mongoCollection.insertMany(produtos);
     if (result.insertedCount == 0)
         throw Error('Erro ao importar protudos!')
     console.info("Produtos importados com sucesso!")
