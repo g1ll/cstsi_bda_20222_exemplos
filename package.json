@@ -2,6 +2,7 @@
   "type": "module",
   "dependencies": {
     "dotenv": "^16.0.1",
-    "firebase": "^9.9.1"
+    "firebase": "^9.9.1",
+    "mongodb": "^4.9.0"
   }
 }
