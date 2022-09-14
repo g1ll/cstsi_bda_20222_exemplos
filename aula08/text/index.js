@@ -14,13 +14,13 @@ try {
     
     //Exemplo de uso da sensibilidade quanto á maiusculo ou minísculo
     //Retornará apenas os produtos com a palavra Samsumg escrita exatamente igual ao termo
-    const termo = "Samsumg"
-    let filtro = {
-        $text: {
-            $search: termo,
-            $caseSensitive:true
-        }
-    }
+    // const termo = "Samsu"
+    // let filtro = {
+    //     $text: {
+    //         $search: termo,
+    //         $caseSensitive:true
+    //     }
+    // }
 
 
     //Exemplo de uso da sensibilidade diacritica
@@ -37,7 +37,7 @@ try {
     //Exemplo de exclusão de termo
     //Retornará todos os produtos com a palavra Smartphone,
     //exceto aqueles com o termo samsumg
-    // const termo = "Smartphone -samsumg"
+    // const termo = "SmartTV -LG"
     // let filtro = {
     //     $text: {
     //         $search: termo,
@@ -45,15 +45,16 @@ try {
     // }
 
     // //Exemplo busca por frases, índice descricao
-    // const termo = "\"Smartphone Asus\""
-    // let filtro = {
-    //     $text: {
-    //         $search: termo,
-    //     }
-    // }
+    const termo = "\"SmartTV 5G\""
+    let filtro = {
+        $text: {
+            $search: termo,
+        }
+    }
+
     const opcoes = {
         sort: { preco: -1 },
-        projection: { _id: 0, descricao: 1 }
+        projection: { _id: 0, nome: 1 }
     }
 
     // filtro = {}

@@ -16,22 +16,22 @@ try {
 
     //OPERADORES DE ATUALIZAÇÃO
     //Exemplo SET
-    const filter = {id_prod:111};
-    const newProduto = {
-        preco: 5500
-    }
-
-    const collection = client.db('loja').collection('produtos')
-    const resultado = await collection.updateOne(
-        filter,
-        {$set:newProduto}
-    );
-    console.log(resultado)
-
-    // //Exemplo INC
     // const filter = {id_prod:111};
     // const newProduto = {
-    //     qtd_estoque: 100
+    //     preco: 5500
+    // }
+
+    // const collection = client.db('loja').collection('produtos')
+    // const resultado = await collection.updateOne(
+    //     filter,
+    //     {$set:newProduto}
+    // );
+    // console.log(resultado)
+
+    //Exemplo INC
+    // const filter = {id_prod:111};
+    // const newProduto = {
+    //     qtd_estoque: -100
     // }
 
     // const collection = client.db('loja').collection('produtos')
@@ -65,6 +65,7 @@ try {
     // const filter = {id_prod:111};
     // const newProduto = {
     //     importado:""//o valor do campo não é importante.
+    //     // importado:1
     // }
     // const collection = client.db('loja').collection('produtos')
     // const resultado = await collection.updateOne(
@@ -76,7 +77,7 @@ try {
     //Exemplo MUL
     // const filter = {id_prod:111};
     // const newProduto = {
-    //     price:0.9//reduzir em 10% o preco do produto
+    //     price:0.9 ///reduzir em 10% o preco do produto
     // }
     // const collection = client.db('loja').collection('produtos')
     // const resultado = await collection.updateOne(
@@ -98,13 +99,13 @@ try {
     // console.log(resultado)
 
     //Exemplo REPLACEONE
-    // const filter = {id_prod:132};
+    // const filter = {id_prod:130};
     // const newProduto = {
-    //     id_prod:132,
-    //     status:"esgotado"
+    //     id_prod:130,
+    //     status:"acabou!"
     // }
     // const collection = client.db('loja').collection('produtos')
-    // const resultado = await collection.replaceOne(filter,newProduto);
+    // const resultado = await collection.replaceMany(filter,newProduto);
     // console.log(resultado)
 
 } catch (error) {

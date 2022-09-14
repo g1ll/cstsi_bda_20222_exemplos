@@ -13,8 +13,11 @@ try {
         throw Error("Erro ao conectar ao banco !!")
     console.log('Conectado!')
 
+    //Exemplo DELETE
+    // const filter = {id_prod:130};
+
     //Exemplo DELETEMANY
-    const filter = {id_prod:{$in:[122,123,124]}};
+    const filter = {id_prod:{$in:[205,206,207]}};
 
     const collection = client.db('loja').collection('produtos')
     const resultado = await collection.deleteMany(filter);
