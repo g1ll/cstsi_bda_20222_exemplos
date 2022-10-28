@@ -12,12 +12,14 @@ const db = getDatabase();
 //     email: "beltrano@email.com",
 //     usarname: "b3ltr0n"
 // }
-// push(ref(db,'users/'),newUser)
 
-// let newUserID = 1;
-// let refNode = ref(db,`users/${newUserID}`);
-// let newUserData = {email:"fulano@gmail.com", username: "fulaninho"}
-// set(refNode, newUserData)
+
+let newUserID = 1;
+let refNode = ref(db,`users/${newUserID}`);
+let newUserData = {email:"fulano@gmail.com", username: "fulaninho"}
+set(refNode, newUserData)
+
+// push(ref(db,'users/'),newUser)
 
 //SET vs PUSH
 // set(ref(db,'users/'+2),{
@@ -58,3 +60,12 @@ const db = getDatabase();
 //     process.exit(0)
 //   })
 //   .catch(error=>console.log("Erro!?"+error))
+
+//UPDATE
+// update(ref(rfDB,"alunos/1"),{
+// 	nome: "Gill",
+// 	matricula:89798798
+// }).then(()=>{
+// 	console.log('Updated!')
+// 	process.exit(0)	
+// })
