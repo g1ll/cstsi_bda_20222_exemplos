@@ -7,6 +7,7 @@ const assincrono = ()=> new Promise((resolve,reject)=>{
             status='resolvido'
             resolve(status)
         }
+        
         let rand = Math.random()
         setTimeout(()=>reject('rejeitado'),delay*rand)
         rand = Math.random()
