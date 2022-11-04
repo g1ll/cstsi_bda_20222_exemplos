@@ -10,14 +10,29 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = fb.getDatabase(app);
 
+//GET
+// const refNode = child(refDB,"users");
 
-//ORDER BY KEY VS ORDER BY VALUE
-const refDB = fb.ref(db,'produtos/-MwSzyJMlNDToTGtPuhc');
-//const consulta = fb.query(refDB,fb.orderByKey()) //PADRAO POR CHAVE
-const consulta = fb.query(refDB,fb.orderByValue()) //POR VALOR
-fb.onChildAdded(consulta,(dados)=>{
-     console.log(`key: ${dados.key} | value:${dados.val()}`);
-})
+// get(refNode).then((snapshot)=>{
+//     if(snapshot.exists()){
+//         console.log(snapshot.val())
+//     }else{
+//         console.log("Nó não encontrado")
+//     }
+//     process.exit(0)
+// }).catch((erro)=>{
+//     console.log(erro)
+//     process.exit(0)
+// })
+
+// //ORDER BY KEY VS ORDER BY VALUE
+// const refDB = fb.ref(db,'produtos/-MwSzyJMlNDToTGtPuhc');
+// //const consulta = fb.query(refDB,fb.orderByKey()) //PADRAO POR CHAVE
+// const consulta = fb.query(refDB,fb.orderByValue()) //POR VALOR
+// fb.onChildAdded(consulta,(dados)=>{
+//      console.log(`key: ${dados.key} | value:${dados.val()}`);
+// })
+
 
 
 //ORDER BY KEY
@@ -80,20 +95,6 @@ fb.onChildAdded(consulta,(dados)=>{
 //     // process.exit(0)
 // });
 
-//SET
-// const refNode = child(refDB,"users");
-
-// get(refNode).then((snapshot)=>{
-//     if(snapshot.exists()){
-//         console.log(snapshot.val())
-//     }else{
-//         console.log("Nó não encontrado")
-//     }
-//     process.exit(0)
-// }).catch((erro)=>{
-//     console.log(erro)
-//     process.exit(0)
-// })
 
 
 
