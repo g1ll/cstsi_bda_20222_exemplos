@@ -1,23 +1,24 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, set, ref, push, child} from "firebase/database";
+import { getDatabase, ref, set,push,child, update } from "firebase/database";
 
 const firebaseConfig = {
-//INSIRA A CONFIGURAÇÃO DO SEU PROJETO
+	projectId: "cstis-dba-5sem",
+	
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase();
 
+// let newUserID = 1;
+// let refNode = ref(db,`users/${newUserID}`);
+// let newUserData = {
+// 	email:"fulano@hotmail.com", username: "fulan"}
+// set(refNode, newUserData)
+
 // const newUser ={
-//     email: "beltrano@email.com",
-//     usarname: "b3ltr0n"
+//     email: "ciclano@email.com",
+//     usarname: "cicrano"
 // }
-
-
-let newUserID = 1;
-let refNode = ref(db,`users/${newUserID}`);
-let newUserData = {email:"fulano@gmail.com", username: "fulaninho"}
-set(refNode, newUserData)
 
 // push(ref(db,'users/'),newUser)
 
@@ -27,21 +28,22 @@ set(refNode, newUserData)
 //     usarname: "Ciclano"
 // })
 
-// push(ref(db,'users/+2'),{
+// push(ref(db,'users/2'),{
 //     id: 2,
 //     email: "ciclano@email.com",
 //     usarname: "Ciclano"
 // })
 
 //PROMISES
-// set(ref(db,'users/'+3),{
-//         email: "homer@simpsons.com",
-//         username: "Homer"
+// set(ref(db,'users/'+4),{
+//         email: "bart@simpsons.com",
+//         username: "Bart"
 //     }).then(()=>{
-//       console.log("Registro alterado!")
-//       process.exit(0)
+//       console.log("Registrado!")
 //     })
-//     .catch(error=>console.log("Erro!?"+error))
+//     .catch(error=>{
+// 		console.log("Erro!?"+error)
+// 	}).finally(()=>process.exit(0))
 
 // push(ref(db,'users/'),{
 //   email: "lisa@simpsons.com",
@@ -62,10 +64,9 @@ set(refNode, newUserData)
 //   .catch(error=>console.log("Erro!?"+error))
 
 //UPDATE
-// update(ref(rfDB,"alunos/1"),{
-// 	nome: "Gill",
-// 	matricula:89798798
-// }).then(()=>{
-// 	console.log('Updated!')
-// 	process.exit(0)	
-// })
+update(ref(db,"users/4"),{
+	username: "Bartolomeu",
+}).then(()=>{
+	console.log('Updated!')
+	process.exit(0)	
+})
