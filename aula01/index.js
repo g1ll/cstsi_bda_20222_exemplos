@@ -8,10 +8,16 @@ assincrono()
     })
     .catch(msg=>console.log('error:'+msg))
 
-try{
-    console.log('await:'+(await assincrono())) //para o processo
-}catch(e){
-    console.log('error:'+e)
-}
+//async/await
+
+// async function testAssincrono(){
+//     try{
+//         console.log('await:'+(await assincrono())) //para o processo
+//    }catch(e){
+//        console.log('error: '+e)
+//    }    
+// }
+
+// await testAssincrono()
 
 console.log('teste')
