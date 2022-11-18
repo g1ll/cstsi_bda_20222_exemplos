@@ -1,9 +1,16 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set,push,child, update } from "firebase/database";
+import { getDatabase, ref, set, push, child, update, get } from "firebase/database";
 
 const firebaseConfig = {
-	projectId: "cstis-dba-5sem",
-	
+	apiKey: "AIzaSyCErZ6b4Px5yvlt6rX3-Jfs1Cgq47z8aGY",
+	authDomain: "cstsi-dba-5sem.firebaseapp.com",
+	databaseURL: "https://cstsi-dba-5sem-default-rtdb.firebaseio.com",
+	projectId: "cstsi-dba-5sem",
+	storageBucket: "cstsi-dba-5sem.appspot.com",
+	messagingSenderId: "227526288700",
+	appId: "1:227526288700:web:c780711b0f683b0353ea39",
+	measurementId: "G-CD1W710QLD"
+
 };
 
 const app = initializeApp(firebaseConfig);
@@ -28,10 +35,15 @@ const db = getDatabase();
 //     usarname: "Ciclano"
 // })
 
-// push(ref(db,'users/2'),{
+// set(ref(db,'users/'+3),{
+//     email: "beltrano@email.com",
+//     usarname: "Beltrano"
+// })
+
+// push(ref(db,'users/'),{
 //     id: 2,
-//     email: "ciclano@email.com",
-//     usarname: "Ciclano"
+//     email: "mengano@email.com",
+//     usarname: "Mengano"
 // })
 
 //PROMISES
@@ -46,8 +58,8 @@ const db = getDatabase();
 // 	}).finally(()=>process.exit(0))
 
 // push(ref(db,'users/'),{
-//   email: "lisa@simpsons.com",
-//   username: "lisajazz"
+//   email: "bart@simpsons.com",
+//   username: "Bartolomeu"
 // }).then(ref=>{
 //   console.log("Registro Inserido!");
 //   process.exit(0)
@@ -64,9 +76,13 @@ const db = getDatabase();
 //   .catch(error=>console.log("Erro!?"+error))
 
 //UPDATE
-update(ref(db,"users/4"),{
-	username: "Bartolomeu",
-}).then(()=>{
-	console.log('Updated!')
-	process.exit(0)	
-})
+// update(ref(db, "users"), {
+// 	"3": {
+// 		email: "gillgonzales@ifsul.edu.br",
+// 		nome: "Gill Gonzales",
+// 	}
+// }).then(() => {
+// 	console.log('Updated!')
+// 	process.exit(0)
+// })
+
