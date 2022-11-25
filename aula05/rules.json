@@ -1,14 +1,27 @@
 {
 	"rules": {
-	".read": "now < 1661310000000",  	 // 2022-8-24
-	// ".write": "now < 1661310000000",  // 2022-8-24 
-	// ".write": "!data.exists() || !newData.exists()", //apenas criação e remoção
-	"produtos":{
-		".indexOn": ["preco","nome"],
-		"$id":{
-                ".validate": "newData.hasChild('nome')", //testa se existe o campo nome
-              	".write": "!data.exists() || !newData.exists()"
-           	}
-        }
-    }
+		".read": "now < 1672369200000", // 2022-12-30
+		"produtos": {
+			".indexOn": [
+				"preco",
+				"nome"
+			],
+			"$id": {
+				".write": "root.child('users').hasChild(auth.uid)",
+				".validate": "newData.hasChildren(['nome','preco','qtd_estoque'])", //testa se existe o campo nome
+				//".write": "!data.exists() || !newData.exists()",
+				"qtd_estoque": {
+					".validate": "newData.isNumber()&& newData.val()>0"
+				},
+				"importado": {
+					".validate": "newData.isBoolean()",
+				}
+			}
+		},
+		"users": {
+			"$uid": {
+				".write": "$uid===auth.uid"
+			}
+		}
+	}
 }
