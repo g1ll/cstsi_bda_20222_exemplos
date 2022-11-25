@@ -19,6 +19,8 @@ const firebaseConfig = {
     appId: process.env.APP_APP_ID
 };
 
+console.log(firebaseConfig)
+// process.exit(0)
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -73,10 +75,16 @@ const auth = getAuth();
 //     email: 'gillgonzales@ifsul.edu.br',
 //     password: 'qwerty'
 // }
-// const credentials = 
-// await createUserWithEmailAndPassword(
-//     auth, user.email, user.password);
-// console.log(credentials.user.uid)
+// try {
+//     const credentials =
+//         await createUserWithEmailAndPassword(
+//             auth, user.email, user.password
+//         );
+//     console.log(credentials.user.uid)
+// } catch (e) {
+//     console.error("Erro ao criar usuario: "+e.message)
+// }
+
 
 //LOGIN E LOGOUT DO USUÁRIO
 //### ASYNC/AWAIT
@@ -97,9 +105,9 @@ const auth = getAuth();
 //     const errorCode = error.code;
 //     const errorMessage = error.message;
 //     console.log({errorCode, errorMessage})
+// }finally{
 //     process.exit(0)
 // }
-// process.exit(0)
 
 // #### EXEMPLO COM THEN().CATCH()
 // console.log({ "token":
@@ -111,13 +119,11 @@ const auth = getAuth();
 //         "token": auth.currentUser?.accessToken })
 //     console.log({ "uid":
 //      auth.currentUser.uid })
-//      process.exit(0)   
 // }).catch(error=>{
 //     const errorCode = error.code;
 //     const errorMessage = error.message;
 //     console.log({errorCode, errorMessage})
-//     process.exit(0)
-// })
+// }).finally(()=>process.exit(0))
 
 
 //##### INTEGRANDO COM REALTIME DATABASE
@@ -134,7 +140,6 @@ const createUser = async (email, password) => {
             ref(db, 'users/' + credentials.user.uid), {
             "email": email,
         })
-        process.exit(0)
     } catch (error) {
         console.log({ 'errorCode': error.code, "Message": error.Message })
         process.exit(0)
@@ -157,7 +162,7 @@ const insertProduto = async (newProduto) => {
     try {
         const refPush =
             await push(ref(db, 'produtos'), newProduto)
-        if (refPush) console.log({ "produto": refPush._path.pieces_})
+        if (refPush) console.log({ "produto": refPush._path.pieces_ })
     } catch (error) {
         console.log(error.code)
         process.exit(0)
@@ -166,25 +171,24 @@ const insertProduto = async (newProduto) => {
 
 //Create new user
 const user = {
-    email: 'gillgonzales@ifsul.edu.br',
-    password: 'qwerty'
+    email: 'gillvelleda@gmail.com',
+    password: 'asdfasdf008098adsfasd0f98'
 }
 
-// createUser(user.email, user.password)
-
+// await createUser(user.email, user.password)
 
 const loggedUser = await loginUser(user.email, user.password);
 console.log(loggedUser.uid)
-const novoProduto = {
-    descricao: "TV SMART 80\" LG 16K",
-    id_prod: 333,
-    importado: 0,
-    nome: "TV SMART LG 80\"",
-    preco: 19990,
-    qtd_estoque: 100,
-    uid: loggedUser.uid
-};
-await insertProduto(novoProduto);
-process.exit(0)
 
-// console.log(await get(ref(db,'users/')))
+if (loggedUser.uid) {
+    const novoProduto = {
+        descricao: "TV SMART 80\" LG 16K",
+        id_prod: 333,
+        importado: false,
+        nome: "LG",
+        preco: 19990,
+        qtd_estoque: 10
+    };
+    await insertProduto(novoProduto)
+    process.exit(0)
+}
