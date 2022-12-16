@@ -14,13 +14,13 @@ try {
     
     //Exemplo de uso da sensibilidade quanto á maiusculo ou minísculo
     //Retornará apenas os produtos com a palavra Samsumg escrita exatamente igual ao termo
-    // const termo = "Samsu"
-    // let filtro = {
-    //     $text: {
-    //         $search: termo,
-    //         $caseSensitive:true
-    //     }
-    // }
+    const termo = "SAMSUMG"
+    let filtro = {
+        $text: {
+            $search: termo,
+            $caseSensitive:false
+        }
+    }
 
 
     //Exemplo de uso da sensibilidade diacritica
@@ -45,19 +45,19 @@ try {
     // }
 
     // //Exemplo busca por frases, índice descricao
-    const termo = "\"SmartTV 5G\""
-    let filtro = {
-        $text: {
-            $search: termo,
-        }
-    }
-
-    const opcoes = {
-        sort: { preco: -1 },
-        projection: { _id: 0, nome: 1 }
-    }
+    // const termo = "\"SmartTV 5G\""
+    // let filtro = {
+    //     $text: {
+    //         $search: termo,
+    //     }
+    // }
 
     // filtro = {}
+    const opcoes = { 
+        sort: { nome: 1 },
+        projection: { _id: 0, descricao: 0 }
+     }
+
     const collection = client.db('loja').collection('produtos')
     const resultados = await collection.find(filtro, opcoes).toArray()
     console.table(resultados)
